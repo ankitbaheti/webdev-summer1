@@ -1,35 +1,40 @@
 (function () {
     jQuery(main);
 
-    var tbody;
-    var template;
+    var $tbody;
+    var $template;
+    var $usernameFld, $passwordFld, $roleFld;
+    var $firstNameFld, $lastNameFld;
+    var $createBtn, $updateBtn;
+
     var userService = new UserServiceClient();
 
     function main() {
-        tbody = $('tbody');
-        template = $('.template');
-        $('.wbdv-create').click(createUser);
-        $('.wbdv-update').click(updateUser);
+        $tbody = $('tbody');
+        $template = $('.template');
+        $usernameFld = $('#usernameFld');
+        $passwordFld = $('#passwordFld');
+        $lastNameFld = $('#lastNameFld');
+        $firstNameFld = $('#firstNameFld');
+        $roleFld = $('#roleFld');
+        $createBtn = $('.wbdv-create');
+        $updateBtn = $('.wbdv-update');
+
+        $createBtn.click(createUser);
+        $updateBtn.click(updateUser);
 
         userService.findAllUsers()
             .then(renderUsers);
     }
 
     function createUser() {
-        console.log('createUser');
 
-        var username = $('#usernameFld').val();
-        var password = $('#passwordFld').val();
-        var firstName = $('#firstNameFld').val();
-        var lastName = $('#lastNameFld').val();
-        var role = $('#roleFld').val();
-        var user = {
-            username: username,
-            password: password,
-            firstName: firstName,
-            lastName: lastName,
-            role: role
-        };
+        var username = $usernameFld.val();
+        var password = $passwordFld.val();
+        var firstName = $firstNameFld.val();
+        var lastName = $lastNameFld.val();
+        var role = $roleFld.val();
+        var user = new User(username, password, firstName, lastName, role);
 
         userService
             .createUser(user)
@@ -43,10 +48,10 @@
     }
 
     function renderUsers(users) {
-        tbody.empty();
+        $tbody.empty();
         for(var i=0; i<users.length; i++) {
             var user = users[i];
-            var clone = template.clone();
+            var clone = $template.clone();
 
             clone.attr('id', user.id);
             clone.attr('username', user.username);
@@ -54,11 +59,9 @@
             clone.attr('firstName', user.firstName);
             clone.attr('lastName', user.lastName);
             clone.attr('role', user.role);
-            //$('.wbdv-update').attr('id', user.id);
-
 
             clone.find('.wbdv-remove').click(deleteUser);
-            clone.find('.wbdv-edit').click(renderUser);
+            clone.find('.wbdv-edit').click(selectUser);
 
             clone.find('.wbdv-username')
                 .html(user.username);
@@ -68,42 +71,42 @@
                 .html(user.lastName);
             clone.find('.wbdv-role')
                 .html(user.role);
-            tbody.append(clone);
+            $tbody.append(clone);
         }
     }
 
-    function renderUser(event) {
+    function selectUser(event) {
         var editBtn = $(event.currentTarget);
         var userId = editBtn.parent().parent().parent().attr('id');
         $('.wbdv-update').attr('id',userId);
-        var firstName = editBtn.parent().parent().parent().attr('firstName');
-        var lastName = editBtn.parent().parent().parent().attr('lastName');
-        var role = editBtn.parent().parent().parent().attr('role');
-        var username = editBtn.parent().parent().parent().attr('username');
-        var password = editBtn.parent().parent().parent().attr('password');
-        $('#firstNameFld').val(firstName);
-        $('#lastNameFld').val(lastName);
-        $('#roleFld').val(role);
-        $('#usernameFld').val(username);
-        $('#passwordFld').val(password);
+        findUserById(userId);
     }
 
-    function updateUser(event) {
-        var updateBtn = $(event.currentTarget);
-        var userId = updateBtn.attr('id');
-        console.log(userId);
-        var username = $('#usernameFld').val();
-        var password = $('#passwordFld').val();
-        var firstName = $('#firstNameFld').val();
-        var lastName = $('#lastNameFld').val();
-        var role = $('#roleFld').val();
-        var user = {
-            username: username,
-            password: password,
-            firstName: firstName,
-            lastName: lastName,
-            role: role
-        };
+    function findUserById(userId) {
+        userService
+            .findUserById(userId)
+            .then(renderUser)
+    }
+
+    function renderUser(user) {
+
+        console.log(user);
+        $firstNameFld.val(user.firstName);
+        $lastNameFld.val(user.lastName);
+        $roleFld.val(user.role);
+        $usernameFld.val(user.username);
+        $passwordFld.val(user.password);
+    }
+
+    function updateUser() {
+        var userId = $('.wbdv-update').attr('id');
+        var username = $usernameFld.val();
+        var password = $passwordFld.val();
+        var firstName = $firstNameFld.val();
+        var lastName = $lastNameFld.val();
+        var role = $roleFld.val();
+
+        var user = new User(username, password, firstName, lastName, role);
 
         userService
             .updateUser(userId, user)
@@ -112,11 +115,7 @@
 
     function deleteUser(event) {
         var deleteBtn = $(event.currentTarget);
-        var userId = deleteBtn
-            .parent()
-            .parent()
-            .parent()
-            .attr('id');
+        var userId = deleteBtn.parent().parent().parent().attr('id');
 
         userService
             .deleteUser(userId)

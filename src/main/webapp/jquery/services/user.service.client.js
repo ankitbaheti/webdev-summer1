@@ -4,10 +4,18 @@ function UserServiceClient() {
     this.findAllUsers = findAllUsers;
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
+    this.findUserById = findUserById;
 
     this.url =
         '/api/user';
     var self = this;
+
+    function findUserById(userId) {
+        return fetch(self.url + '/' + userId)
+            .then(function (response) {
+                return response.json();
+            });
+    }
 
     function deleteUser(userId) {
         return fetch(self.url + '/' + userId, {

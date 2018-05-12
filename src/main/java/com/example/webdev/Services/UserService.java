@@ -18,6 +18,13 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
+    @GetMapping("/api/user/{userId}")
+    public User findUserById(@PathVariable("userId") int usedId){
+        if(userRepository.findById(usedId).isPresent())
+            return userRepository.findById(usedId).get();
+        return null;
+    }
+
     @PostMapping("/api/user")
     public User createUser(@RequestBody User user){
         return userRepository.save(user);
