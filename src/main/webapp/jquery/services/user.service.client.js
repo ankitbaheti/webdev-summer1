@@ -6,7 +6,7 @@ function UserServiceClient() {
     this.updateUser = updateUser;
 
     this.url =
-        'http://localhost:8080/api/user';
+        '/api/user';
     var self = this;
 
     function deleteUser(userId) {
