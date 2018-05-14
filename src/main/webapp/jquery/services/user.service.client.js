@@ -38,7 +38,6 @@ function UserServiceClient() {
     }
     
     function login(user) {
-        console.log("hiihi");
         return fetch('http://localhost:8080/api/login', {
             method: 'post',
                 body: JSON.stringify(user),
