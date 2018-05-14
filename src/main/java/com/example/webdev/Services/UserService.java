@@ -68,7 +68,6 @@ public class UserService {
     }
 
     public User findUserByCredential(String username, String password){
-        System.out.println("hello from credential");
         List<User> users = (List<User>) userRepository.findUserByCredential(username, password);
         if(users.size() != 0) {
             return users.get(0);
@@ -78,7 +77,6 @@ public class UserService {
 
     @PostMapping("/api/login")
     public User login(@RequestBody User user, HttpServletResponse httpServletResponse){
-        System.out.println("hello from login");
         User user1 = findUserByCredential(user.getUsername(), user.getPassword());
         if(user1 != null){
             return user1;
