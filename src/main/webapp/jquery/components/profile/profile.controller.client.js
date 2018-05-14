@@ -43,11 +43,10 @@
             role: $roleFld.val()
         };
 
+        $('.alert').show();
+
         userService
-            .updateProfile(uid, user)
-            .then(function () {
-                alert('user updated');
-            });
+            .updateProfile(uid, user);
     }
     function logout() {
         window.location.replace("../login/login.template.client.html");
