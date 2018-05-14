@@ -38,7 +38,7 @@ function UserServiceClient() {
     }
     
     function login(user) {
-        return fetch('http://localhost:8080/api/login', {
+        return fetch('/api/login', {
             method: 'post',
                 body: JSON.stringify(user),
                 headers: {
