@@ -5,6 +5,7 @@ import com.example.webdev.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -44,5 +45,25 @@ public class UserService {
             return userRepository.save(user1);
         }
         return null;
+    }
+
+    public User findUserByUsername(String username){
+        List<User> users = (List<User>) userRepository.findUserByUsername(username);
+        if(users.size()!=0){
+            return users.get(0);
+        }
+        return null;
+    }
+
+    @PostMapping("/api/register")
+    public User register(@RequestBody User user, HttpServletResponse httpServletResponse){
+        User user1 = findUserByUsername(user.getUsername());
+        if(user1 == null){
+            return userRepository.save(user);
+        }
+        else{
+            httpServletResponse.setStatus(HttpServletResponse.SC_CONFLICT);
+            return null;
+        }
     }
 }
