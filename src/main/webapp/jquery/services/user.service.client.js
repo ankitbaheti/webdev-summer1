@@ -6,6 +6,7 @@ function UserServiceClient() {
     this.updateUser = updateUser;
     this.findUserById = findUserById;
     this.register = register;
+    this.login = login;
 
     this.url =
         '/api/user';
@@ -17,6 +18,17 @@ function UserServiceClient() {
                 return response.json();
             });
     }
+    
+    function login(user) {
+        console.log("hiihi");
+        return fetch('http://localhost:8080/api/login', {
+            method: 'post',
+                body: JSON.stringify(user),
+                headers: {
+                    'content-type': 'application/json'
+                }
+        });
+    }
 
     function register(user) {
         return fetch('/api/register/', {
@@ -25,10 +37,7 @@ function UserServiceClient() {
                 headers: {
                 'content-type': 'application/json'
                 }
-        })
-            .then(function (response) {
-                return response.status;
-            });
+        });
     }
 
     function deleteUser(userId) {

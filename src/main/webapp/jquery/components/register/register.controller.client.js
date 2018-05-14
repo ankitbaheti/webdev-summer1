@@ -16,14 +16,18 @@
     }
 
     function register() {
+        var uId;
         if($verifyPasswordFld.val() === $passwordFld.val()){
             var user = new User($usernameFld.val(), $passwordFld.val());
             userService
                 .register(user)
-                .then(function (value) {
+                .then(function (promise) {
+                    var value = promise.status;
                     if(value === 200){
-                        console.log("success");
-                        window.location.replace("../profile/profile.template.client.html");
+                        promise.json().then(function (response) {
+                            uId = response.id;
+                            window.location.replace("../profile/profile.template.client.html?uid=" + uId);
+                        });
                     }
                     else
                         alert("Username already exist");
