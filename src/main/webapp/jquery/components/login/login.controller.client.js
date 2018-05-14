@@ -13,7 +13,6 @@
         $loginBtn.click(login);
     }
     function login() {
-        alert("hi");
         var uId;
         var user = new User($usernameFld.val(), $passwordFld.val());
         userService

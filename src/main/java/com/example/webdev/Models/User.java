@@ -105,6 +105,12 @@ public class User {
                 user.username : this.username;
         this.password = user.password != null ?
                 user.password : this.password;
+        this.phone = user.phone != null ?
+                user.phone : this.phone;
+        this.email = user.email != null ?
+                user.email : this.email;
+        this.dateOfBirth = user.dateOfBirth != null ?
+                user.dateOfBirth : this.dateOfBirth;
         this.role = user.role != null ?
                 user.role : this.role;
     }

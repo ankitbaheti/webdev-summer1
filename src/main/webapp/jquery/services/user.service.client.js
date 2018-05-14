@@ -7,6 +7,7 @@ function UserServiceClient() {
     this.findUserById = findUserById;
     this.register = register;
     this.login = login;
+    this.updateProfile = updateProfile;
 
     this.url =
         '/api/user';
@@ -16,6 +17,23 @@ function UserServiceClient() {
         return fetch(self.url + '/' + userId)
             .then(function (response) {
                 return response.json();
+            });
+    }
+
+    function updateProfile(userId, user) {
+        return fetch('/api/profile' + '/' + userId, {
+            method: 'put',
+            body: JSON.stringify(user),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(function(response){
+                if(response.bodyUsed) {
+                    return response.json();
+                } else {
+                    return null;
+                }
             });
     }
     
