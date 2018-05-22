@@ -1,7 +1,11 @@
 package com.example.webdev.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Course {
@@ -11,9 +15,12 @@ public class Course {
     private int id;
     private String title;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date created = new Date();
     @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
+    private Date modified = new Date();
+    @OneToMany(mappedBy="course")
+    @JsonIgnore
+    private List<Module> modules = new ArrayList<>();
 
     public Course() {
     }
@@ -48,5 +55,13 @@ public class Course {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
     }
 }
