@@ -18,7 +18,7 @@ public class Course {
     private Date created = new Date();
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified = new Date();
-    @OneToMany(mappedBy="course")
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Module> modules = new ArrayList<>();
 
