@@ -64,4 +64,10 @@ public class Course {
     public void setModules(List<Module> modules) {
         this.modules = modules;
     }
+
+    public void updateCourse(Course course){
+        this.title = course.title != null ?
+                course.title : this.title;
+
+    }
 }

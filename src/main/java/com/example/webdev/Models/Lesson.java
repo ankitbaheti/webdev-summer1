@@ -41,4 +41,9 @@ public class Lesson {
     public void setModule(Module module) {
         this.module = module;
     }
+
+    public void updateLesson(Lesson lesson){
+        this.title = lesson.title != null ?
+                lesson.title : this.title;
+    }
 }

@@ -53,4 +53,15 @@ public class ModuleService {
     void deleteModule(@PathVariable("moduleId") int moduleId){
         moduleRepository.deleteById(moduleId);
     }
+
+    @PutMapping("/api/module/{moduleId}")
+    Module updateModule(@PathVariable("moduleId") int moduleId,
+                        @RequestBody Module newModule){
+        if(moduleRepository.findById(moduleId).isPresent()){
+            Module module = moduleRepository.findById(moduleId).get();
+            module.updateModule(newModule);
+            return moduleRepository.save(module);
+        }
+        return null;
+    }
 }

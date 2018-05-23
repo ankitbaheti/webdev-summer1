@@ -52,4 +52,15 @@ public class LessonService {
     void deleteLessonById(@PathVariable("lessonId") int lessonId){
         lessonRepository.deleteById(lessonId);
     }
+
+    @PutMapping("/api/lesson/{lessonId}")
+    Lesson updateLesson(@PathVariable("lessonId") int lessonId,
+                        @RequestBody Lesson newLesson){
+        if(lessonRepository.findById(lessonId).isPresent()){
+            Lesson lesson = lessonRepository.findById(lessonId).get();
+            lesson.updateLesson(newLesson);
+            return lessonRepository.save(lesson);
+        }
+        return null;
+    }
 }

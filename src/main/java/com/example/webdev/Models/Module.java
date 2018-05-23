@@ -56,5 +56,10 @@ public class Module {
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
     }
+
+    public void updateModule(Module module){
+        this.title = module.title != null ?
+                module.title : this.title;
+    }
 }
 

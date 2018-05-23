@@ -36,4 +36,15 @@ public class CourseService {
     Course findCourseById(@PathVariable("courseId") int courseId){
         return courseRepository.findById(courseId).get();
     }
+
+    @PutMapping("/api/course/{courseId}")
+    Course updateCourse(@PathVariable("courseId") int courseId,
+                        @RequestBody Course newCourse){
+        if(courseRepository.findById(courseId).isPresent()){
+            Course course = courseRepository.findById(courseId).get();
+            course.updateCourse(newCourse);
+            return courseRepository.save(course);
+        }
+        return null;
+    }
 }
