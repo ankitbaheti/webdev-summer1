@@ -31,4 +31,9 @@ public class CourseService {
             courseRepository.deleteById(courseId);
         }
     }
+
+    @GetMapping("/api/course/{courseId}")
+    Course findCourseById(@PathVariable("courseId") int courseId){
+        return courseRepository.findById(courseId).get();
+    }
 }
