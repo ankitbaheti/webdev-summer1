@@ -44,6 +44,11 @@ public class ModuleService {
         return (List<Module>) moduleRepository.findAll();
     }
 
+    @GetMapping("/api/module/{moduleId}")
+    Module findModuleById(@PathVariable("moduleId") int moduleId){
+        return moduleRepository.findById(moduleId).get();
+    }
+
     @DeleteMapping("/api/module/{moduleId}")
     void deleteModule(@PathVariable("moduleId") int moduleId){
         moduleRepository.deleteById(moduleId);
