@@ -31,19 +31,19 @@ public class WidgetService {
 
     @PostMapping("/api/lesson/{lessonId}/widget")
     public void createWidget(@PathVariable("lessonId") int lessonId, @RequestBody List<Widget> widgets){
-        Optional<Lesson> data= lessonRepository.findById(lessonId);
-        Lesson lesson = null;
-        if(data.isPresent()){
-            lesson=data.get();
+
+        if(lessonRepository.findById(lessonId).isPresent()){
+            Lesson lesson = lessonRepository.findById(lessonId).get();
+            List<Widget> oldWidget = lesson.getWidgets();
+
+            for(Widget widget: oldWidget)
+                widgetRepository.deleteById(widget.getId());
+
+            for(Widget widget: widgets){
+                widget.setLesson(lesson);
+                widgetRepository.save(widget);
+            }
+            lesson.setWidgets(widgets);
         }
-        List<Widget> w =lesson.getWidgets();
-        for(Widget widget:w){
-            widgetRepository.deleteById(widget.getId());
-        }
-        for(Widget widget:widgets){
-            widget.setLesson(lesson);
-            widgetRepository.save(widget);
-        }
-        lesson.setWidgets(widgets);
     }
 }
