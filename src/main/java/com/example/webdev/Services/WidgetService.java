@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -19,6 +18,36 @@ public class WidgetService {
 
     @Autowired
     WidgetRepository widgetRepository;
+
+    @GetMapping("/api/widget")
+    List<Widget> findAllWidget(){
+        return (List<Widget>) widgetRepository.findAll();
+    }
+
+    @GetMapping("/api/widget/{widgetId}")
+    Widget findWidgetById(@PathVariable("widgetId") int widgetId){
+        if(widgetRepository.findById(widgetId).isPresent()){
+            return widgetRepository.findById(widgetId).get();
+        }
+        return null;
+    }
+
+    @DeleteMapping("/api/widget/{widgetId}")
+    void deleteWidgetById(@PathVariable("widgetId") int widgetId){
+        if(widgetRepository.findById(widgetId).isPresent())
+            widgetRepository.deleteById(widgetId);
+    }
+
+    @PutMapping("/api/widget/{widgetId}")
+    Widget updateWidget(@PathVariable("widgetId") int widgetId,
+                        @RequestBody Widget newWidget){
+        if(widgetRepository.findById(widgetId).isPresent()){
+            Widget widget = widgetRepository.findById(widgetId).get();
+            widget.updateWidget(newWidget);
+            return widgetRepository.save(widget);
+        }
+        return null;
+    }
 
     @GetMapping("/api/lesson/{lessonId}/widget")
     List<Widget> findAllWidgetForLesson(@PathVariable("lessonId") int lessonId){

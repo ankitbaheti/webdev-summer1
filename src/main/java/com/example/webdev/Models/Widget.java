@@ -141,4 +141,31 @@ public class Widget {
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
     }
+
+    public void updateWidget(Widget widget){
+        this.name = widget.name != null ?
+                widget.name : this.name;
+        this.orderNumber = widget.orderNumber > 0 ?
+                widget.orderNumber : this.orderNumber;
+        this.text = widget.text != null ?
+                widget.text : this.text;
+        this.widgetType = widget.widgetType != null ?
+                widget.widgetType : this.widgetType;
+        this.style = widget.style != null ?
+                widget.style : this.style;
+        this.width = widget.width != null ?
+                widget.width : this.width;
+        this.height = widget.height != null ?
+                widget.height : this.height;
+        this.size = widget.size > 0 ?
+                widget.size : this.size;
+        this.href = widget.href != null ?
+                widget.href : this.href;
+        this.src = widget.src != null ?
+                widget.src : this.src;
+        this.listItems = widget.listItems != null ?
+                widget.listItems : this.listItems;
+        this.listType = widget.listType != null ?
+                widget.listType : this.listType;
+    }
 }
