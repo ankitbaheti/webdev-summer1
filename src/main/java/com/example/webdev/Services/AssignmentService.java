@@ -48,6 +48,18 @@ public class AssignmentService {
         return null;
     }
 
+    @GetMapping("/api/assignment")
+    List<Assignment> findAllAssignment(){
+        return (List<Assignment>) assignmentRepository.findAll();
+    }
+
+    @GetMapping("/api/assignment/{assignmentId}")
+    Assignment findAssignmentById(@PathVariable("assignmentId") int assignmentId){
+        if(assignmentRepository.findById(assignmentId).isPresent())
+            return assignmentRepository.findById(assignmentId).get();
+        return null;
+    }
+
     @PutMapping("/api/assignment/{assignmentId}")
     Assignment updateAssignment(@PathVariable("assignmentId") int assignmentId, @RequestBody Assignment newAssignment){
         if(assignmentRepository.findById(assignmentId).isPresent()){
@@ -56,5 +68,11 @@ public class AssignmentService {
             return assignmentRepository.save(assignment);
         }
         return null;
+    }
+
+    @DeleteMapping("/api/assignment/{assignmentId}")
+    void deleteAssignmentById(@PathVariable("assignmentId") int assignmentId){
+        if(assignmentRepository.findById(assignmentId).isPresent())
+            assignmentRepository.deleteById(assignmentId);
     }
 }
