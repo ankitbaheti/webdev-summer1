@@ -22,8 +22,21 @@ public class MultipleChoiceExamQuestionService {
                                          @RequestBody MultipleChoiceExamQuestion multipleChoiceExamQuestion){
         if(examRepository.findById(examId).isPresent()){
             Exam exam = examRepository.findById(examId).get();
-            multipleChoiceExamQuestion.setType("MCQ");
+            multipleChoiceExamQuestion.setType("Multiple Choice Question");
             multipleChoiceExamQuestion.setExam(exam);
+            return multipleChoiceExamQuestionRepository.save(multipleChoiceExamQuestion);
+        }
+        return null;
+    }
+
+    @PutMapping("/api/mcq/{questionId}")
+    MultipleChoiceExamQuestion updateMCQ(@PathVariable("questionId") int questionId,
+                                         @RequestBody MultipleChoiceExamQuestion newMultipleChoiceExamQuestion){
+        if(multipleChoiceExamQuestionRepository.findById(questionId).isPresent()){
+            MultipleChoiceExamQuestion multipleChoiceExamQuestion = multipleChoiceExamQuestionRepository
+                    .findById(questionId)
+                    .get();
+            multipleChoiceExamQuestion.update(newMultipleChoiceExamQuestion);
             return multipleChoiceExamQuestionRepository.save(multipleChoiceExamQuestion);
         }
         return null;

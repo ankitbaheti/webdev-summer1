@@ -26,4 +26,17 @@ public class MultipleChoiceExamQuestion extends BaseExamQuestion{
     public void setCorrect(int correct) {
         this.correct = correct;
     }
+
+    public void update(MultipleChoiceExamQuestion multipleChoiceExamQuestion){
+        if(multipleChoiceExamQuestion.getTitle() != null)
+            this.setTitle(multipleChoiceExamQuestion.getTitle());
+        if(multipleChoiceExamQuestion.getDescription() != null)
+            this.setDescription(multipleChoiceExamQuestion.getDescription());
+        if(multipleChoiceExamQuestion.getPoints() >= 0)
+            this.setPoints(multipleChoiceExamQuestion.getPoints());
+        if(multipleChoiceExamQuestion.getCorrect() >= 0)
+            this.setCorrect(multipleChoiceExamQuestion.getCorrect());
+        if(multipleChoiceExamQuestion.getChoices() != null)
+            this.setChoices(multipleChoiceExamQuestion.getChoices());
+    }
 }
