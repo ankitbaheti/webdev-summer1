@@ -46,4 +46,10 @@ public class ExamService {
         }
         return null;
     }
+
+    @DeleteMapping("/api/exam/{examId}")
+    void deleteExam(@PathVariable("examId") int examId){
+        if(examRepository.findById(examId).isPresent())
+            examRepository.deleteById(examId);
+    }
 }
