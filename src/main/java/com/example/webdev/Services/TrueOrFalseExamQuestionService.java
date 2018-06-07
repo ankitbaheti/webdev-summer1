@@ -22,8 +22,21 @@ public class TrueOrFalseExamQuestionService {
                                                     @RequestBody TrueOrFalseExamQuestion trueOrFalseExamQuestion){
         if(examRepository.findById(examId).isPresent()){
             Exam exam = examRepository.findById(examId).get();
-            trueOrFalseExamQuestion.setType("TrueFalse");
+            trueOrFalseExamQuestion.setType("True Or False");
             trueOrFalseExamQuestion.setExam(exam);
+            return trueOrFalseExamQuestionRepository.save(trueOrFalseExamQuestion);
+        }
+        return null;
+    }
+
+    @PutMapping("/api/truefalse/{questionId}")
+    TrueOrFalseExamQuestion updateQuestion(@PathVariable("questionId") int questionId,
+                                           @RequestBody TrueOrFalseExamQuestion newTrueOrFalseExamQuestion){
+        if(trueOrFalseExamQuestionRepository.findById(questionId).isPresent()){
+            TrueOrFalseExamQuestion trueOrFalseExamQuestion = trueOrFalseExamQuestionRepository
+                    .findById(questionId)
+                    .get();
+            trueOrFalseExamQuestion.update(newTrueOrFalseExamQuestion);
             return trueOrFalseExamQuestionRepository.save(trueOrFalseExamQuestion);
         }
         return null;

@@ -20,4 +20,15 @@ public class TrueOrFalseExamQuestion extends BaseExamQuestion {
     public void setTrue(boolean aTrue) {
         isTrue = aTrue;
     }
+
+    public void update(TrueOrFalseExamQuestion trueOrFalseExamQuestion){
+        if(trueOrFalseExamQuestion.getTitle() != null)
+            this.setTitle(trueOrFalseExamQuestion.getTitle());
+        if(trueOrFalseExamQuestion.getDescription() != null)
+            this.setDescription(trueOrFalseExamQuestion.getDescription());
+        if(trueOrFalseExamQuestion.getPoints() >= 0)
+            this.setPoints(trueOrFalseExamQuestion.getPoints());
+        if(trueOrFalseExamQuestion.isTrue() != this.isTrue)
+            this.setTrue(trueOrFalseExamQuestion.isTrue());
+    }
 }
