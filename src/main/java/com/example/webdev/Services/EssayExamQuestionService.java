@@ -28,4 +28,15 @@ public class EssayExamQuestionService {
         }
         return null;
     }
+
+    @PutMapping("/api/essayquestion/{questionId}")
+    EssayExamQuestion updateQuestion(@PathVariable("questionId") int questionId,
+                                     @RequestBody EssayExamQuestion newEssayExamQuestion){
+        if(essayExamQuestionRepository.findById(questionId).isPresent()){
+            EssayExamQuestion essayExamQuestion = essayExamQuestionRepository.findById(questionId).get();
+            essayExamQuestion.update(newEssayExamQuestion);
+            return essayExamQuestionRepository.save(essayExamQuestion);
+        }
+        return null;
+    }
 }
